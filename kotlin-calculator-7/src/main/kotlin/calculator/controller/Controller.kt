@@ -4,11 +4,10 @@ import calculator.model.Calculator
 import calculator.model.Separator
 import calculator.view.InputView
 import calculator.view.OutputView
-import camp.nextstep.edu.missionutils.Console
 
 class Controller {
 
-    fun start(){
+    fun start() {
         val inputView = InputView()
         val input = inputView.getInput()
         val separator = Separator(input)
