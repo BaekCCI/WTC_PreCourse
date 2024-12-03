@@ -3,6 +3,7 @@ package calculator.controller
 import calculator.model.Calculator
 import calculator.model.Separator
 import calculator.view.InputView
+import calculator.view.OutputView
 import camp.nextstep.edu.missionutils.Console
 
 class Controller {
@@ -15,6 +16,7 @@ class Controller {
         println(numbers)
         val calculator = Calculator()
         val result = calculator.sum(numbers)
-
+        val outputView = OutputView()
+        outputView.display(result)
     }
 }
