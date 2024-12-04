@@ -1,7 +1,6 @@
 package racingcar
 
 const val DELIMITER = ","
-
 const val MAX_LENGTH = 5
 
 object Validator {
