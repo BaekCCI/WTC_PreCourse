@@ -10,6 +10,8 @@ class Controller {
     private val inputView = InputView()
     fun start() {
         val cars = createCar()
+        val count = getCount()
+
 
     }
 
@@ -18,5 +20,11 @@ class Controller {
         Validator.validateCar(input)
         val carNames = input.split(DELIMITER).map { it.trim() }
         return carNames.map { it -> Car(it, 0) }
+    }
+
+    private fun getCount(): Int {
+        val input = inputView.getCount()
+        Validator.validateCount(input)
+        return input.toInt()
     }
 }

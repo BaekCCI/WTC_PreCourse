@@ -1,4 +1,5 @@
 package racingcar.model
 
-class Race {
+class Race(cars: List<Car>, count: Int) {
+
 }

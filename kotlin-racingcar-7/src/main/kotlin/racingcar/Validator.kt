@@ -19,4 +19,11 @@ object Validator {
         }
         return true
     }
+
+    fun validateCount(input: String) {
+        val count = input.toIntOrNull()
+        if (input == "") throw IllegalArgumentException("빈문자열이 입력되었습니다.")
+        else if (count == null) throw IllegalArgumentException("정수로 입력해야 합니다.")
+        else if (count <= 0) throw IllegalArgumentException("1회 이상 입력해야 합니다.")
+    }
 }
