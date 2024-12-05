@@ -26,4 +26,8 @@ class Lotto(private val numbers: List<Int>) {
         require(!numbers.contains(bonusNum)) { "{ERROR] 중복된 숫자가 존재합니다." }
     }
 
+    fun getLotto(): List<Int> {
+        return numbers
+    }
+
 }

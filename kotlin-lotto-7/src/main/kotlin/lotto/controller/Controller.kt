@@ -2,13 +2,17 @@ package lotto.controller
 
 import lotto.Validator
 import lotto.model.Lotto
+import lotto.model.LottoMachine
 import lotto.view.InputView
+import lotto.view.OutputView
 
 class Controller {
     fun start() {
         val purchaseAmount = getAmount()
+        generateLotto(purchaseAmount)
         val winningLotto = getWinningNum()
         val bonusNum = getBonusNum(winningLotto)
+
 
     }
 
@@ -24,8 +28,11 @@ class Controller {
         }
     }
 
-    fun generateLotto(amount: Int) {
-        //로또 발행 with LottoMachine Class
+    fun generateLotto(purchaseAmount: Int) {
+        val lottoMachine = LottoMachine(purchaseAmount)
+        val purchasedLotto = lottoMachine.getPurchasedLotto()
+        OutputView.displayPurchasedLotto(purchasedLotto)
+
     }
 
     private fun getWinningNum(): Lotto {
