@@ -2,17 +2,17 @@ package lotto.controller
 
 import lotto.Validator
 import lotto.model.Lotto
+import lotto.model.LottoCalculator
 import lotto.model.LottoMachine
 import lotto.view.InputView
 import lotto.view.OutputView
 
 class Controller {
     fun start() {
-        val purchaseAmount = getAmount()
-        generateLotto(purchaseAmount)
+        val purchasePrice = getAmount()
+        val purchaseLotto = generateLotto(purchasePrice)
         val winningLotto = getWinningNum()
         val bonusNum = getBonusNum(winningLotto)
-
 
     }
 
@@ -28,11 +28,11 @@ class Controller {
         }
     }
 
-    fun generateLotto(purchaseAmount: Int) {
-        val lottoMachine = LottoMachine(purchaseAmount)
+    fun generateLotto(purchasePrice: Int): List<Lotto> {
+        val lottoMachine = LottoMachine(purchasePrice)
         val purchasedLotto = lottoMachine.getPurchasedLotto()
         OutputView.displayPurchasedLotto(purchasedLotto)
-
+        return purchasedLotto
     }
 
     private fun getWinningNum(): Lotto {
@@ -59,6 +59,13 @@ class Controller {
                 println(e.message)
             }
         }
+    }
+
+    private fun getResult(purchasePrice: Int, purchaseLotto: List<Lotto>, winningLotto: Lotto, bonusNum: Int) {
+        val calculator = LottoCalculator(purchasePrice, purchaseLotto, winningLotto, bonusNum)
+        val result = calculator.calculate()
+        val priceRatio = calculator.getTotalPriceRatio(result)
+
     }
 
 }
