@@ -15,9 +15,10 @@ class LottoCalculator(
         return lottoResult
     }
 
-    fun isMatch(lotto: List<Int>): LottoPrize {
+    private fun isMatch(lotto: List<Int>): LottoPrize {
         val matchCount = lotto.intersect(winningLotto.getLotto()).size
         val isMatchBonus = lotto.contains(bonusNum)
+
         return LottoPrize.getRank(matchCount, isMatchBonus)
     }
 

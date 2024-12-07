@@ -4,6 +4,7 @@ import lotto.Validator
 import lotto.model.Lotto
 import lotto.model.LottoCalculator
 import lotto.model.LottoMachine
+import lotto.model.LottoPrize
 import lotto.view.InputView
 import lotto.view.OutputView
 
@@ -13,7 +14,7 @@ class Controller {
         val purchaseLotto = generateLotto(purchasePrice)
         val winningLotto = getWinningNum()
         val bonusNum = getBonusNum(winningLotto)
-
+        getResult(purchasePrice, purchaseLotto, winningLotto, bonusNum)
     }
 
     private fun getAmount(): Int {
@@ -64,7 +65,18 @@ class Controller {
     private fun getResult(purchasePrice: Int, purchaseLotto: List<Lotto>, winningLotto: Lotto, bonusNum: Int) {
         val calculator = LottoCalculator(purchasePrice, purchaseLotto, winningLotto, bonusNum)
         val result = calculator.calculate()
-        val priceRatio = calculator.getTotalPriceRatio(result)
+
+        val resultCount = result.groupingBy { it }.eachCount()
+        OutputView.displayLottoResultTitle()
+        LottoPrize.entries
+            .reversed()
+            .filter { it != LottoPrize.NOTHING }
+            .forEach {
+                val count = resultCount[it] ?: 0
+                OutputView.displayLottoResult(it, count)
+            }
+        val prizeRatio = calculator.getTotalPriceRatio(result)
+        OutputView.displayPrizeRatio(prizeRatio)
 
     }
 
