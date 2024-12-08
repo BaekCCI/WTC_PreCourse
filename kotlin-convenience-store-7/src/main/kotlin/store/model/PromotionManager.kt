@@ -1,6 +1,8 @@
 package store.model
 
+import camp.nextstep.edu.missionutils.DateTimes
 import store.data.Promotion
+import java.time.LocalDate
 
 const val PROMOTION_DATA_PATH = "src/main/resources/promotions.md"
 
@@ -29,6 +31,21 @@ class PromotionManager {
                 end_date = end_date
             )
         )
+    }
 
+    fun isInPromotionDate(name: String): Boolean {
+        val promotion = promotions.find { it.name == name }
+        val today = DateTimes.now().toLocalDate()
+        if (promotion != null) {
+            val start_date = getLocalDate(promotion.start_date)
+            val end_date = getLocalDate(promotion.end_date)
+            return (today.isAfter(start_date) && today.isBefore(end_date))
+        }
+        return false
+    }
+
+    private fun getLocalDate(date: String): LocalDate {
+        val (year, month, day) = date.split("-").map { it.toInt() }
+        return LocalDate.of(year, month, day)
     }
 }
