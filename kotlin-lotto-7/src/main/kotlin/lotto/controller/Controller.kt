@@ -1,6 +1,7 @@
 package lotto.controller
 
 import lotto.Validator
+import lotto.constant.COMMA
 import lotto.model.Lotto
 import lotto.model.LottoCalculator
 import lotto.model.LottoMachine
@@ -22,14 +23,14 @@ class Controller {
             try {
                 val money = InputView.getPurchaseAmount()
                 Validator.moneyValidator(money)
-                return money.replace(",", "").toInt()
+                return money.replace(COMMA, "").toInt()
             } catch (e: IllegalArgumentException) {
                 println(e.message)
             }
         }
     }
 
-    fun generateLotto(purchasePrice: Int): List<Lotto> {
+    private fun generateLotto(purchasePrice: Int): List<Lotto> {
         val lottoMachine = LottoMachine(purchasePrice)
         val purchasedLotto = lottoMachine.getPurchasedLotto()
         OutputView.displayPurchasedLotto(purchasedLotto)
@@ -41,7 +42,7 @@ class Controller {
             try {
                 val input = InputView.getWinningNum()
                 Validator.winningNumValidator(input)
-                val numbers = input.split(",").map { it.trim().toInt() }
+                val numbers = input.split(COMMA).map { it.trim().toInt() }
                 return Lotto(numbers)
             } catch (e: IllegalArgumentException) {
                 println(e.message)

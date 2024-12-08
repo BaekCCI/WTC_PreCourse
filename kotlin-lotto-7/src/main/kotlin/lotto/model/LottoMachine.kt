@@ -1,10 +1,9 @@
 package lotto.model
 
 import camp.nextstep.edu.missionutils.Randoms
+import lotto.constant.*
 
-const val LOTTO_PRICE = 1_000
-
-class LottoMachine(val money: Int) {
+class LottoMachine(private val money: Int) {
     private val amount: Int = money / LOTTO_PRICE
     private val purchasedLotto = generateLotto()
 
@@ -17,7 +16,7 @@ class LottoMachine(val money: Int) {
     }
 
     private fun getRandomNum(): List<Int> {
-        return Randoms.pickUniqueNumbersInRange(1, 45, 6).sorted()
+        return Randoms.pickUniqueNumbersInRange(MIN_NUM, MAX_NUM, LOTTO_SIZE).sorted()
     }
 
     fun getPurchasedLotto(): List<Lotto> {

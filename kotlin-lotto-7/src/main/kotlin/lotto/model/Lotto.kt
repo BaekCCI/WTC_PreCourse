@@ -1,13 +1,12 @@
 package lotto.model
 
-const val MAX_NUM = 45
-const val MIN_NUM = 1
+import lotto.constant.*
 
 class Lotto(private val numbers: List<Int>) {
     init {
-        require(numbers.size == 6) { "[ERROR] 로또 번호는 6개여야 합니다." }
-        require(isInRange()) { "[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다." }
-        require(isDuplicate()) { "{ERROR] 중복된 숫자가 존재합니다." }
+        require(numbers.size == LOTTO_SIZE) { ErrorMsg.NUMBER_OF_LOTTO.format() }
+        require(isInRange()) { ErrorMsg.LOTTO_NUMBER_RANGE.format() }
+        require(isDuplicate()) { ErrorMsg.DUPLICATE_NUMBER.format() }
     }
 
     private fun isInRange(): Boolean {
@@ -22,12 +21,11 @@ class Lotto(private val numbers: List<Int>) {
     }
 
     fun isDuplicate(bonusNum: Int) {
-        require(bonusNum in MIN_NUM..MAX_NUM) { "[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다." }
-        require(!numbers.contains(bonusNum)) { "{ERROR] 중복된 숫자가 존재합니다." }
+        require(bonusNum in MIN_NUM..MAX_NUM) { ErrorMsg.LOTTO_NUMBER_RANGE.format() }
+        require(!numbers.contains(bonusNum)) { ErrorMsg.DUPLICATE_NUMBER.format() }
     }
 
     fun getLotto(): List<Int> {
         return numbers
     }
-
 }

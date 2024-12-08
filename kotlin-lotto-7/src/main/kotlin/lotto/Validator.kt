@@ -1,21 +1,21 @@
 package lotto
 
-const val MONEY = "^(\\d+)|(\\d{1,3}(,\\d{3})*)$"
+import lotto.constant.*
 
 object Validator {
     fun moneyValidator(input: String) {
-        require(input.matches(MONEY.toRegex())) { "[ERROR] 잘못된 입력입니다. 다시 입력해주세요." }
-        require(input.replace(",", "").toInt() % 1_000 == 0) { "[ERROR] 천 단위로 입력해주세요." }
+        require(input.matches(VALID_MONEY_PATTERN.toRegex())) { ErrorMsg.INVALID_INPUT.format() }
+        require(input.replace(COMMA, "").toInt() % LOTTO_PRICE == 0) { ErrorMsg.THOUSAND_UNIT.format() }
     }
 
     fun winningNumValidator(input: String) {
-        val numbers = input.split(",").map { it.trim() }
+        val numbers = input.split(COMMA).map { it.trim() }
         numbers.forEach {
-            require(it.toIntOrNull() != null) { "[ERROR] 잘못된 입력입니다. 다시 입력해주세요." }
+            require(it.toIntOrNull() != null) { ErrorMsg.INVALID_INPUT.format() }
         }
     }
 
     fun bonusNumValidator(input: String) {
-        require(input.toIntOrNull() != null) { "[ERROR] 잘못된 입력입니다. 다시 입력해주세요." }
+        require(input.toIntOrNull() != null) { ErrorMsg.INVALID_INPUT.format() }
     }
 }

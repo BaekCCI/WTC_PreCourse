@@ -1,10 +1,10 @@
 package lotto.model
 
 class LottoCalculator(
-    val purchasePrice: Int,
-    val purchaseLotto: List<Lotto>,
-    val winningLotto: Lotto,
-    val bonusNum: Int,
+    private val purchasePrice: Int,
+    private val purchaseLotto: List<Lotto>,
+    private val winningLotto: Lotto,
+    private val bonusNum: Int,
 ) {
 
     fun calculate(): List<LottoPrize> {
@@ -29,5 +29,4 @@ class LottoCalculator(
         }
         return sum.toDouble() / purchasePrice * 100
     }
-
 }

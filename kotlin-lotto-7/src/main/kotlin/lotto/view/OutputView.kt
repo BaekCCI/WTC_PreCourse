@@ -1,16 +1,14 @@
 package lotto.view
 
+import lotto.constant.*
 import lotto.model.Lotto
 import lotto.model.LottoPrize
- // ?<=\\d : Lookbehind, 앞에 숫자가 있는 위치
- // ?=\\d{3} : Lookahead, 뒤에 숫자 3개가 있는 위치
- // ?!\\d : nagative Lookahead, 뒤에 숫자가 더이상 없어야 함.
-const val REGEX = "(?<=\\d)(?=(\\d{3})+(?!\\d))"
+
 
 object OutputView {
     fun displayPurchasedLotto(lotto: List<Lotto>) {
         println()
-        println("${lotto.size}개를 구매했습니다.")
+        println(OutputMsg.PURCHASED_LOTTO.format(lotto.size))
         lotto.forEach {
             println("${it.getLotto()}")
         }
@@ -18,20 +16,20 @@ object OutputView {
 
     fun displayLottoResultTitle() {
         println()
-        println("당첨 통계\n---")
+        println(OutputMsg.WINNING_STATISTICS_TITLE.format())
     }
 
     fun displayLottoResult(rank: LottoPrize, count: Int) {
-        if(rank == LottoPrize.SECOND){
-            println("${rank.matchCount}개 일치, 보너스 볼 일치 (${rank.prize.toString().replace(REGEX.toRegex(),",")}원) - ${count}개")
-        }
-        else{
-            println("${rank.matchCount}개 일치 (${rank.prize.toString().replace(REGEX.toRegex(),",")}원) - ${count}개")
+        val prize = rank.prize.toString().replace(THOUSAND_SEPARATOR_REGEX.toRegex(), COMMA)
+        if (rank == LottoPrize.SECOND) {
+            println(OutputMsg.WINNING_STATISTICS_BONUS.format(rank.matchCount, prize, count))
+        } else {
+            println(OutputMsg.WINNING_STATISTICS.format(rank.matchCount, prize, count))
         }
     }
 
     fun displayPrizeRatio(prizeRatio: Double) {
-        println("총 수익률은 ${"%.1f".format(prizeRatio)}%입니다.")
+        println(OutputMsg.TOTAL_PRIZE_RATIO.format(prizeRatio))
     }
 
 }
