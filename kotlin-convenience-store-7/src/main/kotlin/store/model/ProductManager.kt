@@ -1,5 +1,6 @@
 package store.model
 
+import store.ErrorMessage
 import store.data.Product
 
 const val INVENTORY_PATH = "src/main/resources/products.md"
@@ -20,34 +21,31 @@ class ProductManager {
         }
     }
 
-    private fun saveProduct(name: String, price: Int, quantity: Int, promotion: String?) {
-        val existProduct = products.find { it.name == name }
-
-        if (existProduct != null) {
-            updateExistProduct(existProduct, quantity, promotion)
-        } else addNewProduct(name, price, quantity, promotion)
-    }
-
-    private fun addNewProduct(name: String, price: Int, quantity: Int, promotion: String?) {
+    fun saveProduct(name: String, price: Int, quantity: Int, promotion: String?) {
         products.add(
             Product(
                 name = name,
                 price = price,
-                totalQuantity = quantity,
-                promotionQuantity = if (promotion != null) quantity else 0,
+                quantity = quantity,
                 promotion = promotion
             )
         )
     }
 
-    private fun updateExistProduct(existProduct: Product, quantity: Int, promotion: String?) {
-        existProduct.totalQuantity += quantity
 
-        if (promotion != null) {
-            existProduct.promotionQuantity += quantity
-        }
-        if (existProduct.promotion == null && promotion != null) {
-            existProduct.promotion = promotion
+    fun get(): List<Product> {
+        return products
+    }
+
+    fun checkPurchaseProduct(tempCart: Map<String, Int>) {
+        tempCart.forEach { (name, purchaseAmount) ->
+            val matchProduct = products.filter { it.name == name }
+            var totalQuantity = 0
+            matchProduct.forEach {
+                totalQuantity += it.quantity
+            }
+            require(matchProduct.isNotEmpty()) { ErrorMessage.PRODUCT_NOT_FOUND.format() }
+            require(purchaseAmount <= totalQuantity) { ErrorMessage.EXCEED_STOCK_QUANTITY.format() }
         }
     }
 

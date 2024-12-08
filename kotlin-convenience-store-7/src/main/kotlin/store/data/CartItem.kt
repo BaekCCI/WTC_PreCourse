@@ -1,6 +1,6 @@
 package store.data
 
-data class OrderItem(
+data class CartItem(
     val product : Product,
     var purchaseAmount : Int
 )

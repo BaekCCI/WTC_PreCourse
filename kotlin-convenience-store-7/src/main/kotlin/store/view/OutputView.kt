@@ -1,10 +1,12 @@
 package store.view
 
+import store.data.Product
+
 const val THOUSAND_SEPARATOR_REGEX = "(?<=\\d)(?=(\\d{3})+(?!\\d))"
 
 enum class OutputMessage(private val message: String) {
     WELCOME("안녕하세요. W편의점입니다.\n현재 보유하고 있는 상품입니다."),
-    PRODUCT_INFO("%s %s원 %s %s"),
+    PRODUCT_INFO("- %s %s원 %s %s"),
     RECEIPT_TITLE("===========W 편의점=============\n상품명\t\t수량\t금액"),
     RECEIPT_PURCHASE_ITEM("%s\t%d\t%s"),
     RECEIPT_EXTRA_ITEM_TITLE("===========증\t정============="),
@@ -55,6 +57,15 @@ class OutputView {
 
     fun displayProductInfo(name: String, price: Int, quantity: Int, promotion: String?) {
         println(OutputMessage.PRODUCT_INFO.format(name, price, quantity, promotion))
+    }
+
+    fun display(products: List<Product>) {
+        products.forEach { product ->
+            println(OutputMessage.PRODUCT_INFO.format(product.name, product.price, product.quantity, product.promotion))
+            if (product.promotion != null && !products.any { it.name == product.name && it.promotion == null }) {
+                println(OutputMessage.PRODUCT_INFO.format(product.name, product.price, 0, null))
+            }
+        }
     }
 
     fun displayReceiptTitle() {

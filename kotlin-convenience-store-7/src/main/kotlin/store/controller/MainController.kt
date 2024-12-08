@@ -4,10 +4,9 @@ import store.Validator
 import store.model.ProductManager
 import store.model.PromotionManager
 import store.view.InputView
-import store.view.OutputMessage
 import store.view.OutputView
 
-class Controller {
+class MainController {
     val productManager = ProductManager()
     val promotionManager = PromotionManager()
     val inputView = InputView()
@@ -16,7 +15,7 @@ class Controller {
 
     fun start() {
         displayProducts()
-
+        val tempCart = handlePurchase()
 
     }
 
@@ -43,14 +42,10 @@ class Controller {
         }
     }
 
-    fun addCart(input: String) {
+    fun addCart(input: String): Map<String, Int> {
         val tempCart = parseInput(input)
-        val
         productManager.checkPurchaseProduct(tempCart)
-        tempCart.forEach{(name,amount)->
-
-
-        }
+        return tempCart
     }
 
     fun parseInput(input: String): Map<String, Int> {
