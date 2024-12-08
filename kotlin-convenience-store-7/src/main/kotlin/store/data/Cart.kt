@@ -1,6 +1,6 @@
 package store.data
 
 data class Cart(
-    val name : String,
+    val product : Product,
     var purchaseQuantity : Int
 )
