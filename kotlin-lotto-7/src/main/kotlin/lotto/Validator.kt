@@ -5,7 +5,8 @@ import lotto.constant.*
 object Validator {
     fun moneyValidator(input: String) {
         require(input.matches(VALID_MONEY_PATTERN.toRegex())) { ErrorMsg.INVALID_INPUT.format() }
-        require(input.replace(COMMA, "").toInt() % LOTTO_PRICE == 0) { ErrorMsg.THOUSAND_UNIT.format() }
+        val inputWithOutComma = input.replace(COMMA, "").toInt()
+        require(inputWithOutComma != 0 && inputWithOutComma % LOTTO_PRICE == 0) { ErrorMsg.THOUSAND_UNIT.format() }
     }
 
     fun winningNumValidator(input: String) {
