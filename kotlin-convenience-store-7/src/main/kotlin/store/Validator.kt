@@ -20,4 +20,8 @@ class Validator {
         val cleanedInput = input.replace(" ", "")
         require(cleanedInput.matches(PURCHASE_FORMAT_REGEX.toRegex())) { ErrorMessage.INVALID_PURCHASE_FORMAT.format() }
     }
+
+    fun validateYesOrNoInput(input: String) {
+        require(input == "y" || input == "n")
+    }
 }

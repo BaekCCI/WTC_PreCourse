@@ -88,17 +88,17 @@ class OutputView {
         println(OutputMessage.RECEIPT_LINE.format())
     }
 
-    fun displayReceiptTotal(
-        totalAmount: Int,
-        totalPrice: Int,
-        promotionDiscount: Int,
-        membershipDiscount: Int,
-        actualPay: Int
-    ) {
+    fun displayReceiptTotal(totalAmount: Int, totalPrice: Int) {
         println(OutputMessage.RECEIPT_LINE.format())
         println(OutputMessage.RECEIPT_TOTAL_PRICE.format(totalAmount, totalPrice))
+    }
+
+    fun displayReceiptDiscount(promotionDiscount: Int, membershipDiscount: Int) {
         println(OutputMessage.RECEIPT_PROMOTION_DISCOUNT.format(promotionDiscount))
         println(OutputMessage.RECEIPT_MEMBERSHIP_DISCOUNT.format(membershipDiscount))
+    }
+
+    fun displayActualPay(actualPay: Int) {
         println(OutputMessage.RECEIPT_ACTUAL_PAY.format(actualPay))
     }
 }

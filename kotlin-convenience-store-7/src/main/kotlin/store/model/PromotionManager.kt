@@ -1,6 +1,7 @@
 package store.model
 
 import camp.nextstep.edu.missionutils.DateTimes
+import store.data.Product
 import store.data.Promotion
 import java.time.LocalDate
 
@@ -47,5 +48,13 @@ class PromotionManager {
     private fun getLocalDate(date: String): LocalDate {
         val (year, month, day) = date.split("-").map { it.toInt() }
         return LocalDate.of(year, month, day)
+    }
+
+    fun getBuy(product: Product): Int {
+        return promotions.find { it.name == product.promotion }?.buy ?: 0
+    }
+
+    fun getGet(product: Product): Int {
+        return promotions.find { it.name == product.promotion }?.get ?: 0
     }
 }

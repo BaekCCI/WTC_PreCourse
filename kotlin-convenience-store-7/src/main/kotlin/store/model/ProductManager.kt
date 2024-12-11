@@ -49,5 +49,36 @@ class ProductManager {
         }
     }
 
+    fun getTotalQuantity(name: String): Int {
+        var totalQuantity = 0
+        products.forEach {
+            if (it.name == name) totalQuantity += it.quantity
+        }
+        return totalQuantity
+    }
+
+    fun checkIsPromotion(name: String): Boolean {
+        val promotionManager = PromotionManager()
+        val product = products.find { it.name == name && it.promotion != null }
+        return product != null && promotionManager.isInPromotionDate(product.promotion!!)
+    }
+
+    fun getGeneralProduct(name: String): Product {
+        return products.find { it.name == name && it.promotion == null }!!
+    }
+
+    fun getPromotionProduct(name: String): Product {
+        return products.find { it.name == name && it.promotion != null }!!
+    }
+
+    fun isPromotionQuantitySufficient(name: String, amount: Int): Boolean {
+        val product = products.find { it.name == name && it.promotion != null }
+        return amount < product!!.quantity
+    }
+
+    fun getPromotion(name: String): String {
+        return products.find { it.name == name && it.promotion != null }!!.promotion!!
+    }
+
 
 }
